@@ -6,9 +6,46 @@
 
 def urlchecker(url):
 
-    # your code should go here
+  if not (url.startswith('http://') or url.startswith('https://')):
+    return False
 
-    return True
+  #begins with a most one ?
+  qc=url.count('?')
+  if qc>1:
+    return False
+
+  #at most one #
+  hc=url.count("#")
+  if hc>1:
+    return False
+
+  #no spaces
+  if ' ' in url:
+    return False
+  # # must be before ?
+  if url.find("?") !=-1:
+    if url.find("#")>url.find("?"):
+      return False
+
+      
+  #host before '/'
+  sc=url.count("/")
+  if sc<3:
+    return False
+  scheme, after = url.split('://')
+  hostport, afterslash = after.split("/", 1)
+  if hostport=="":
+    return False 
+
+#At most two :, check hostname isnt empty and port is digits 
+  cc=url.count(":")
+  if cc>2:
+    return False
+  if cc==2:
+    if ":" not in hostport:
+      return False
+      
+  return True
 
 
 def testurl():
@@ -38,3 +75,4 @@ def testurl():
         else:
             print(f"{url} - ok")
 
+testurl()
